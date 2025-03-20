@@ -1,0 +1,28 @@
+[package]
+name = "modularity"
+version = "0.1.0"
+edition = "2021"
+description = "A Rust library for performant modular arithmetic"
+license = "MIT"
+
+[dependencies]
+num-traits = "0.2"
+num-integer = "0.1"
+
+# Optional dependencies
+[dependencies.num-bigint]
+version = "0.4"
+optional = true
+
+[features]
+default = []
+arbitrary-precision = ["num-bigint"]
+hardware-acceleration = []
+
+[dev-dependencies]
+criterion = "0.4"
+proptest = "1.0"
+
+[[bench]]
+name = "modular_arithmetic"
+harness = false
