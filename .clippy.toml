@@ -1,0 +1,19 @@
+# Clippy configuration for modularity library
+
+# Enable type complexity checks but with a higher threshold since we work with complex generic types
+type-complexity-threshold = 250
+
+# Don't warn about too many arguments for mathematical functions
+too-many-arguments-threshold = 10
+
+# Allow some complexity in numeric code
+cognitive-complexity-threshold = 25
+
+# False positives with numeric code
+disallowed-methods = []
+
+# Additional lints to enforce
+warn-on-all-wildcard-imports = true
+
+# Performance is critical for this library
+too-large-for-stack = 200

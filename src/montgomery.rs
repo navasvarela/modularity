@@ -140,14 +140,14 @@ impl MontgomeryArithmetic<u64> for ModularInt<u64> {
         assert_eq!(self.modulus(), ctx.modulus(), "Modulus mismatch");
         // To convert to Montgomery form, multiply by R^2 mod n and then reduce
         let mont_value = ctx.montgomery_reduction(self.value() as u128 * ctx.r_squared as u128);
-        ModularInt::new(mont_value, self.modulus())
+        ModularInt::<u64>::new(mont_value, self.modulus())
     }
 
     fn from_montgomery(&self, ctx: &MontgomeryContext<u64>) -> ModularInt<u64> {
         assert_eq!(self.modulus(), ctx.modulus(), "Modulus mismatch");
         // To convert from Montgomery form, apply Montgomery reduction with 1
         let regular_value = ctx.montgomery_reduction(self.value() as u128);
-        ModularInt::new(regular_value, self.modulus())
+        ModularInt::<u64>::new(regular_value, self.modulus())
     }
 
     fn montgomery_mul(
@@ -160,7 +160,7 @@ impl MontgomeryArithmetic<u64> for ModularInt<u64> {
 
         // Montgomery multiplication is just regular multiplication followed by Montgomery reduction
         let result = ctx.montgomery_reduction(self.value() as u128 * other.value() as u128);
-        ModularInt::new(result, self.modulus())
+        ModularInt::<u64>::new(result, self.modulus())
     }
 }
 
@@ -173,8 +173,8 @@ mod tests {
         let modulus = 17u64;
         let ctx = MontgomeryContext::new(modulus);
 
-        let a = ModularInt::new(5u64, modulus);
-        let b = ModularInt::new(7u64, modulus);
+        let a = ModularInt::<u64>::new(5u64, modulus);
+        let b = ModularInt::<u64>::new(7u64, modulus);
 
         let a_mont = a.to_montgomery(&ctx);
         let b_mont = b.to_montgomery(&ctx);
@@ -190,8 +190,8 @@ mod tests {
         let large_prime = 0xFFFFFFFFFFFFFFFBu64; // 2^64 - 5
         let ctx = MontgomeryContext::new(large_prime);
 
-        let a = ModularInt::new(0xABCDEF0123456789u64, large_prime);
-        let b = ModularInt::new(0x123456789ABCDEFu64, large_prime);
+        let a = ModularInt::<u64>::new(0xABCDEF0123456789u64, large_prime);
+        let b = ModularInt::<u64>::new(0x123456789ABCDEFu64, large_prime);
 
         let a_mont = a.to_montgomery(&ctx);
         let b_mont = b.to_montgomery(&ctx);

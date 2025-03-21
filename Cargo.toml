@@ -26,3 +26,17 @@ proptest = "1.0"
 [[bench]]
 name = "modular_arithmetic"
 harness = false
+
+# Clippy lints for the project
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+complexity = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+unwrap_used = "warn"
+expect_used = "warn"
+# Lints we explicitly allow
+needless_range_loop = "allow" # sometimes clearer for math
+needless_late_init = "allow"  # sometimes more readable
+doc_markdown = "allow"        # mathematical notation often violates these rules
+similar_names = "allow"       # mathematical variables often have similar names

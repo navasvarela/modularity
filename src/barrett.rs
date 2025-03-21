@@ -138,13 +138,13 @@ impl BarrettContext<u64> {
 impl BarrettReduction<u64> for ModularInt<u64> {
     fn barrett_reduce(&self, ctx: &BarrettContext<u64>) -> ModularInt<u64> {
         assert_eq!(self.modulus(), ctx.modulus(), "Modulus mismatch");
-        ModularInt::new(ctx.reduce_u64(self.value()), self.modulus())
+        ModularInt::<u64>::new(ctx.reduce_u64(self.value()), self.modulus())
     }
 
     fn barrett_mul(&self, other: &ModularInt<u64>, ctx: &BarrettContext<u64>) -> ModularInt<u64> {
         assert_eq!(self.modulus(), ctx.modulus(), "Modulus mismatch for self");
         assert_eq!(other.modulus(), ctx.modulus(), "Modulus mismatch for other");
-        ModularInt::new(ctx.mul_mod_u64(self.value(), other.value()), self.modulus())
+        ModularInt::<u64>::new(ctx.mul_mod_u64(self.value(), other.value()), self.modulus())
     }
 }
 
@@ -169,8 +169,8 @@ mod tests {
 
         assert_eq!(ctx.mul_mod_u64(5, 7), 1); // 5 * 7 mod 17 = 35 mod 17 = 1
 
-        let a = ModularInt::new(5u64, modulus);
-        let b = ModularInt::new(7u64, modulus);
+        let a = ModularInt::<u64>::new(5u64, modulus);
+        let b = ModularInt::<u64>::new(7u64, modulus);
 
         let result = a.barrett_mul(&b, &ctx);
         assert_eq!(result.value(), 1);
@@ -181,8 +181,8 @@ mod tests {
         let large_prime = 0xFFFFFFFFFFFFFFFBu64; // 2^64 - 5
         let ctx = BarrettContext::new(large_prime);
 
-        let a = ModularInt::new(0xABCDEF0123456789u64, large_prime);
-        let b = ModularInt::new(0x123456789ABCDEFu64, large_prime);
+        let a = ModularInt::<u64>::new(0xABCDEF0123456789u64, large_prime);
+        let b = ModularInt::<u64>::new(0x123456789ABCDEFu64, large_prime);
 
         let result = a.barrett_mul(&b, &ctx);
 
